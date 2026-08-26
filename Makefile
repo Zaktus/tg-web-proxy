@@ -7,6 +7,11 @@ gen:
 # Build and start everything (configs are regenerated first)
 up: gen
 	docker compose up -d --build
+	@set -a; . ./.env; set +a; \
+	printf '\n\033[1;32m============================================================\033[0m\n'; \
+	printf '\033[1;32m  WEB proxy is up:\033[0m\n'; \
+	printf '\033[1;36m  tg://webproxy?server=$$PUBLIC_HOSTNAME&secret=$$MT_SECRET\033[0m\n'; \
+	printf '\033[1;32m============================================================\033[0m\n'
 
 down:
 	docker compose down
