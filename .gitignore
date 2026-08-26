@@ -1,0 +1,9 @@
+# Local environment and generated configs (may contain secrets) - never commit.
+.env
+config.json
+profiles.json
+backend-config.py
+
+# Logs and editor noise
+*.log
+.DS_Store

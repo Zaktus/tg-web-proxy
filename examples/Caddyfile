@@ -1,0 +1,15 @@
+# Example Caddy configuration for TLS termination in front of the WEB proxy.
+# Replace proxy.example.com with your PUBLIC_HOSTNAME.
+# The relay must receive the original Host header; do not add X-Forwarded-For
+# handling beyond Caddy's defaults, and never log raw URIs or headers (the
+# bridge URL carries the derived capability).
+
+proxy.example.com {
+	encode zstd gzip
+
+	reverse_proxy 127.0.0.1:8090 {
+		transport http {
+			response_header_timeout 40s
+		}
+	}
+}

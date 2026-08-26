@@ -1,0 +1,7 @@
+PORT = __MT_PORT__
+
+USERS = {
+    "__MT_PROFILE_NAME__": "__MT_SECRET__"
+}
+
+TLS_DOMAIN = "__TLS_DOMAIN__"
