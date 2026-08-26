@@ -1,7 +1,6 @@
 services:
   tproxy-server:
     build: .
-    container_name: tproxy-server
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -20,7 +19,6 @@ services:
 
   mtproxy:
     image: alexbers/mtprotoproxy:latest
-    container_name: tproxy-backend
     restart: unless-stopped
     network_mode: host
     volumes:

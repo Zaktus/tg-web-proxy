@@ -144,6 +144,25 @@ make secret    # сгенерировать новый секрет
 └── .env.example          # образец переменных окружения
 ```
 
+## Несколько экземпляров на одном сервере
+
+Контейнеры не имеют фиксированных имён — они получают имя каталога проекта в качестве префикса. Это позволяет запускать несколько независимых экземпляров на одном хосте, например под разными доменами:
+
+```bash
+# первый экземпляр
+mkdir ~/srv/tg-web-proxy && cd ~/srv/tg-web-proxy
+cp .env.example .env   # PUBLIC_HOSTNAME=proxy1.example.com
+make up
+
+# второй экземпляр
+mkdir ~/srv/tg-web-proxy2 && cd ~/srv/tg-web-proxy2
+cp -r ~/srv/tg-web-proxy/. ./
+# скорректируйте .env: другой PUBLIC_HOSTNAME и свободные порты
+make up
+```
+
+Каждому экземпляру нужны свои `PUBLIC_HOSTNAME`, `MT_SECRET` и непересекающиеся порты `RELAY_LISTEN`/`ADMIN_LISTEN`/`MT_BACKEND` (по умолчанию `8090`/`8091`/`8443`). Reverse proxy распределяет домены по соответствующим портам.
+
 ## Лицензия
 
 [MIT](LICENSE). Upstream-код: [telegramdesktop/tproxy-server](https://github.com/telegramdesktop/tproxy-server).
