@@ -56,12 +56,21 @@ render() {
         "$1"
 }
 
-render templates/config.json.tpl > config.json
-render templates/profiles.json.tpl > profiles.json
-render templates/backend-config.py.tpl > backend-config.py
+# Write a rendered template to its destination via a temp file, so a previous
+# run with restrictive modes (e.g. chmod 0400 on profiles.json) never blocks a
+# re-run of this script.
+write_file() {
+    tpl="$1"
+    out="$2"
+    mode="$3"
 
-# The relay rejects profiles files with group/other permission bits (see upstream README).
-chmod 0400 profiles.json
-chmod 0600 config.json backend-config.py
+    render "$tpl" > "$out.tmp"
+    chmod "$mode" "$out.tmp"
+    mv -f "$out.tmp" "$out"
+}
+
+write_file templates/config.json.tpl config.json 0600
+write_file templates/profiles.json.tpl profiles.json 0400
+write_file templates/backend-config.py.tpl backend-config.py 0600
 
 echo "Generated config.json, profiles.json, backend-config.py"
