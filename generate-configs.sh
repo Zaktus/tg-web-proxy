@@ -71,6 +71,8 @@ write_file() {
 
 write_file templates/config.json.tpl config.json 0600
 write_file templates/profiles.json.tpl profiles.json 0400
-write_file templates/backend-config.py.tpl backend-config.py 0600
+# backend-config.py is read inside the mtproxy container by the non-root
+# "tgproxy" user via a bind mount, so it must stay world-readable.
+write_file templates/backend-config.py.tpl backend-config.py 0644
 
 echo "Generated config.json, profiles.json, backend-config.py"
