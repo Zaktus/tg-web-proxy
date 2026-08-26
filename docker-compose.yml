@@ -12,7 +12,7 @@ services:
       mtproxy:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8091/readyz"]
+      test: ["CMD-SHELL", "addr=${ADMIN_LISTEN:-127.0.0.1:8091}; port=$${addr##*:}; wget -qO- \"http://127.0.0.1:$${port}/readyz\""]
       interval: 30s
       timeout: 5s
       retries: 3
