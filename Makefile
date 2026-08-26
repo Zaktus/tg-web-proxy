@@ -10,7 +10,7 @@ up: gen
 	@set -a; . ./.env; set +a; \
 	printf '\n\033[1;32m============================================================\033[0m\n'; \
 	printf '\033[1;32m  WEB proxy is up:\033[0m\n'; \
-	printf '\033[1;36m  tg://webproxy?server=$$PUBLIC_HOSTNAME&secret=$$MT_SECRET\033[0m\n'; \
+	printf '\033[1;36m  tg://webproxy?server=%s&secret=%s\033[0m\n' "$$PUBLIC_HOSTNAME" "$$MT_SECRET"; \
 	printf '\033[1;32m============================================================\033[0m\n'
 
 down:
